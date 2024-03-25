@@ -1,10 +1,14 @@
-require('dotenv').config();
+//require('dotenv').config();
 const { MongoClient } = require('mongodb');
 const fs = require('fs');
 
 // Connection URL and Database Name
-const uri = process.env.DATABASE_URI; 
-const dbName = process.env.DATABASE_NAME;
+//const uri = process.env.DATABASE_URI; 
+//const dbName = process.env.DATABASE_NAME;
+//local link
+const uri = 'mongodb://localhost:27017/myWebAppDB';
+const dbName = 'myWepAppDB';
+
 const client = new MongoClient(uri);
 
 // Path to your JSON file
