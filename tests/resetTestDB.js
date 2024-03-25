@@ -12,7 +12,8 @@ const dbName = 'myWepAppDB';
 const client = new MongoClient(uri);
 
 // Path to your JSON file
-const fileName = process.env.PRODUCTS_JSON;
+//const fileName = process.env.PRODUCTS_JSON;
+const fileName = '/home/emilovicci/webapp/client/src/assets/products.json';
 console.log(fileName);
 
 // Function to insert documents
