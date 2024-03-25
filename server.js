@@ -1,5 +1,6 @@
 const express = require('express');
 require('dotenv').config();
+const product = require('./models/testproducts');
 const logger = require('./utils/logger'); // import logger
 const connectDB = require('./utils/database'); 
 const path = require('path');

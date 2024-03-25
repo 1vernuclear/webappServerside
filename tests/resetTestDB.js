@@ -7,7 +7,7 @@ const fs = require('fs');
 //const dbName = process.env.DATABASE_NAME;
 //local link
 const uri = 'mongodb://localhost:27017/myWebAppDB';
-const dbName = 'myWepAppDB';
+const dbName = 'myWebAppDB';
 
 const client = new MongoClient(uri);
 
@@ -19,7 +19,7 @@ console.log(fileName);
 // Function to insert documents
 async function insertDocuments(db) {
   // Collection name
-  const collection = db.collection('testCollection');
+  const collection = db.collection('testproducts');
 
   // Wipe all documents from the collection
   await collection.deleteMany({});
