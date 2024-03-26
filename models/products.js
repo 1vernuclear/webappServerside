@@ -11,6 +11,6 @@ const productSchema = new mongoose.Schema({
     upsellProductId: { type: String, default: null },
     imagePath: { type: String, required: true },
     giftWrap: { type: Boolean, default: false }
-});
+}, {timestamps: true});
 
-module.exports = mongoose.model('Product', productSchema);
+module.exports = mongoose.model('Products', productSchema);

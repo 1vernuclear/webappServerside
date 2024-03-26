@@ -3,7 +3,7 @@ const { MongoClient } = require('mongodb');
 const fs = require('fs');
 
 // Connection URL and Database Name
-const uri = process.env.DATABASE_URI; 
+const uri = process.env.DATABASE_URI;
 const dbName = process.env.DATABASE_NAME;
 const client = new MongoClient(uri);
 

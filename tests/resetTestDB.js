@@ -19,7 +19,7 @@ console.log(fileName);
 // Function to insert documents
 async function insertDocuments(db) {
   // Collection name
-  const collection = db.collection('testproducts');
+  const collection = db.collection('products');
 
   // Wipe all documents from the collection
   await collection.deleteMany({});

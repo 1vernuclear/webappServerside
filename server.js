@@ -1,16 +1,16 @@
 const express = require('express');
 require('dotenv').config();
-const product = require('./models/testproducts');
-const logger = require('./utils/logger'); // import logger
+const logger = require('./utils/logger'); 
+const productRouter = require('./routes/productRoutes');
 const connectDB = require('./utils/database'); 
 const path = require('path');
-const http = require('http');
 const fs = require('fs');
-const _ = require('lodash');
 
+const PORT = process.env.PORT || 3000;
 const server = express();
 server.set('view engine', 'ejs');
-const PORT = process.env.PORT || 3000; 
+
+server.use(express.urlencoded({ extended: true }));
 
 /**Path to react build, ie. path to static files, 
  * making them referable from the frontend / browser.
@@ -32,6 +32,8 @@ server.use((req, res, next) => {
   console.log('Static files path', pathstatic); //test log to be removed.
   next();
 });
+
+server.use('/products', productRouter);
 
 server.use((req, res) => {
   logger.error('404 invoked');
