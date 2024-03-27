@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema({
     rebateQuantity: { type: Number, default: 0 },
     rebatePercent: { type: Number, default: 0 },
     upsellProductId: { type: String, default: null },
-    imagePath: { type: String, required: true },
+    imagePath: { type: String, required: false, default: '/home/emilovicci/webapp/server/balder.jpg' },
     giftWrap: { type: Boolean, default: false }
 }, {timestamps: true});
 

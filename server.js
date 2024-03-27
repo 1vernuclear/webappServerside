@@ -11,6 +11,7 @@ const server = express();
 server.set('view engine', 'ejs');
 
 server.use(express.urlencoded({ extended: true }));
+server.use(express.json());
 
 /**Path to react build, ie. path to static files, 
  * making them referable from the frontend / browser.
