@@ -2,10 +2,10 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const logger = require('./logger');
 
-//const dbConnectionUrl = process.env.DATABASE_URI; // Use an environment variable for the DB connection string
-const dbConnectionUrl = 'mongodb://localhost:27017/myWebAppDB';
+const dbConnectionUrl = process.env.DATABASE_URI; // Use an environment variable for the DB connection string
+//const dbConnectionUrl = 'mongodb://localhost:27017/myWebAppDB';
 
-const connectDB = async (attempts = 5, delay = 5000) => { // Add default parameters for attempts and delay
+const connectDB = async (attempts = 5, delay = 5000) => { 
     for (let i = 0; i < attempts; i++) {
         try {
             await mongoose.connect(dbConnectionUrl, {
