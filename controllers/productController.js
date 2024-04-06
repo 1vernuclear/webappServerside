@@ -37,7 +37,7 @@ const getProduct = async (req, res) => {
 
 const createProduct = async (req, res) => {
     try {
-        console.log(req.body);
+        logger.info(req.body);
         const product = await Product.create(req.body);
         res.status(200).json(product);
     } catch (error) {

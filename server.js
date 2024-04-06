@@ -1,14 +1,17 @@
 const express = require('express');
 require('dotenv').config();
 const logger = require('./utils/logger'); 
-const productRouter = require('./routes/productRoutes');
 const connectDB = require('./utils/database'); 
 const path = require('path');
 const fs = require('fs');
-
+const cors = require('cors');
 const PORT = process.env.PORT || 3000;
 const server = express();
 server.set('view engine', 'ejs');
+
+//routes
+const productRouter = require('./routes/productRoutes');
+const orderRouter = require('./routes/orderRoutes');
 
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
@@ -34,7 +37,8 @@ server.use((req, res, next) => {
   next();
 });
 
-server.use('/products', productRouter);
+server.use('/products', productRouter, cors());
+server.use('/orders', orderRouter, cors());
 
 server.use((req, res) => {
   logger.error('404 invoked');
