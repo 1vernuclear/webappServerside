@@ -13,6 +13,7 @@ server.set('view engine', 'ejs');
 const productRouter = require('./routes/productRoutes');
 const orderRouter = require('./routes/orderRoutes');
 
+server.use(cors());
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
 
@@ -33,12 +34,12 @@ server.use((req, res, next) => {
     method: req.method,
   };
   logger.info('New request made', logInfo);
-  console.log('Static files path', pathstatic); //test log to be removed.
+  //console.log('Static files path', pathstatic); //test log to be removed.
   next();
 });
 
-server.use('/products', productRouter, cors());
-server.use('/orders', orderRouter, cors());
+server.use('/products', productRouter);
+server.use('/orders', orderRouter);
 
 server.use((req, res) => {
   logger.error('404 invoked');
@@ -52,4 +53,8 @@ async function startServer() {
   });
 }
 
-startServer().catch(err => logger.error('Failed to start the server', err));
+startServer().catch(err => {
+  logger.error('Failed to start the server', err);
+  process.exit(1); // Exit the process with a non-zero status code indicating failure, maybe send mail to dev (Nicolai)
+});
+

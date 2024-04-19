@@ -1,4 +1,5 @@
 const Orders = require('../models/orders');
+const procuts = require('../models/products');
 const logger = require('../utils/logger');
 
 const getOrders = async (req, res) => {
@@ -30,13 +31,11 @@ const getOrder = async (req, res) => {
 const createOrder = async (req, res) => {
     logger.info('In CreateOrder');
     try {
-        logger.info(req.body);
+        logger.info('Request Body: ' + JSON.stringify(req.body));
         const order = await Orders.create(req.body);
-        logger.info(order);
         res.status(200).json(order);
     } catch (error) {
-        logger.info(order);
-        logger.error('Failed post', order);
+        logger.error('Failed post');
         res.status(500).json({ message: error.message });
     }
 };

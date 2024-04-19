@@ -20,10 +20,11 @@ const connectDB = async (attempts = 5, delay = 5000) => {
                 logger.info(`Retrying to connect in ${delay / 1000} seconds...`);
                 await new Promise(resolve => setTimeout(resolve, delay)); // Wait for the specified delay
             } else {
-                logger.error('All attempts to connect to MongoDB failed');
-                // Instead of exiting, you could choose to handle this case differently
-                // For example, send an alert to an admin or write to a log file
+                const errorMessage = 'All attempts to connect to MongoDB failed';
+                logger.error(errorMessage);
+                throw new Error(errorMessage);
             }
+            
         }
     }
 };

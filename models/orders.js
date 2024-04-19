@@ -1,6 +1,28 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
+// Base schema for payment details, it will not be used directly
+const PaymentDetailSchema = new Schema({
+    method: { type: String, required: true },
+}, { discriminatorKey: 'method', _id: false });
+
+// Assuming we have an Order model set up
+const paymentDetailModel = mongoose.model('PaymentDetail', PaymentDetailSchema);
+
+// MobilePay details
+paymentDetailModel.discriminator('MobilePay', new Schema({
+    mobilePayNumber: { type: String, required: true },
+}, { _id: false }));
+
+// GiftCard details
+paymentDetailModel.discriminator('GiftCard', new Schema({
+    giftCardNumber: { type: String, required: true },
+    giftCardAmount: { type: Number, required: true },
+}, { _id: false }));
+
+// Invoice details - assuming no additional fields are needed
+paymentDetailModel.discriminator('Invoice', new Schema({}, { _id: false }));
+
 const cartItemSchema = new Schema({
     id: String, // If this is referencing another collection's ObjectId, consider changing the type to Schema.Types.ObjectId
     name: String,
@@ -24,7 +46,8 @@ const orderSchema = new Schema({
     totalPrice: { type: Number, required: true }, // Make sure to convert the totalPrice to a Number if it's provided as a string
     paymentMethod: { type: String, required: true },
     paymentDetails: {
-        mobilePayNumber: String, // Adjust according to your payment method requirements
+        type: PaymentDetailSchema,
+        required: true,
     },
     acceptTerms: { type: Boolean, required: true },
     acceptMarketing: { type: Boolean, default: false },

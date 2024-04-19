@@ -35,6 +35,11 @@ const getProduct = async (req, res) => {
     }
 }
 
+const updateProduct = async (req, res) => {
+    //quantity
+    //id
+} ;
+
 const createProduct = async (req, res) => {
     try {
         logger.info(req.body);
