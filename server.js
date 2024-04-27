@@ -38,6 +38,8 @@ server.use((req, res, next) => {
   next();
 });
 
+// Serve static files from the 'public' directory
+server.use(express.static(path.join(__dirname, 'public')));
 server.use('/products', productRouter);
 server.use('/orders', orderRouter);
 
