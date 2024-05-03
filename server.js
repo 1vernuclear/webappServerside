@@ -4,16 +4,31 @@ const logger = require('./utils/logger');
 const connectDB = require('./utils/database'); 
 const path = require('path');
 const fs = require('fs');
-const cors = require('cors');
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 const server = express();
 server.set('view engine', 'ejs');
-
-//routes
+const cookieParser = require('cookie-parser');
+const { csrfProtection, attachCsrfToken } = require('./middlewares/csrf'); 
 const productRouter = require('./routes/productRoutes');
 const orderRouter = require('./routes/orderRoutes');
+const corsMiddleware = require('./middlewares/cors');
+const limiterMiddleware = require('./middlewares/rateLimit');
+//const apiKeyMiddleware = require('./middlewares//apiKey'); //could be applied when the app has user profiles.
+//api key middleware
+//server.use(apiKeyMiddleware);
 
-server.use(cors());
+//api Limiter
+server.use('/api/', limiterMiddleware);
+
+//cross-site request forgery protection.
+server.use(cookieParser()); 
+server.use(csrfProtection);
+server.use(attachCsrfToken);
+
+//cross site resource sharring
+server.use(corsMiddleware);
+
+server.set('trust proxy', 1);  // Trust first proxy
 server.use(express.urlencoded({ extended: true }));
 server.use(express.json());
 
@@ -47,6 +62,12 @@ server.use((req, res) => {
   logger.error('404 invoked');
   res.status(404).render('404');
 }); 
+
+server.use((err, _req, res) => {
+  logger.error(`Server error: ${err.message}`, { stack: err.stack });
+  res.status(500).render('500', { error: err });
+});
+
 
 async function startServer() {
   await connectDB(); // Make sure the database is connected before starting the server.
